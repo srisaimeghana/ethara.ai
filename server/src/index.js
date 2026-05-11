@@ -84,7 +84,9 @@ if (fs.existsSync(clientBuildPath)) {
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const PORT = parseInt(process.env.PORT, 10) || 4000;
+const rawPort = process.env.PORT;
+const parsedPort = rawPort != null && rawPort !== '' ? Number.parseInt(String(rawPort), 10) : NaN;
+const PORT = Number.isFinite(parsedPort) && parsedPort > 0 ? parsedPort : 4000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Team Task Manager API listening on port ${PORT}`);
 });
